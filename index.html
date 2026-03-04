@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISCI XXX – Games, AI, and Information Integrity</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    font-size: 10.5pt;
+    color: #1a1a2e;
+    background: #fff;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 28px 32px;
+    line-height: 1.55;
+  }
+
+  /* ── Colour vars ── */
+  :root {
+    --garnet: #73000C;
+    --gold:   #FFCC00;
+    --navy:   #1a1a2e;
+    --green:  #2E7D32;
+    --purple: #4A148C;
+    --rust:   #BF360C;
+    --light:  #f5f5f5;
+  }
+
+  /* ── Title Banner ── */
+  .title-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .title-left {
+    background: var(--garnet);
+    padding: 22px 20px;
+  }
+  .title-left .tag {
+    font-size: 8.5pt;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .title-left h1 {
+    font-size: 17pt;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .title-left .subtitle {
+    font-size: 12pt;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .title-right {
+    background: var(--navy);
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .title-right .inst {
+    font-size: 9.5pt;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .title-right p {
+    font-size: 9pt;
+    color: #dde;
+    margin: 2px 0;
+  }
+
+  /* ── Section Label ── */
+  .section-label {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--garnet);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--garnet);
+    padding-bottom: 3px;
+    margin: 20px 0 8px;
+  }
+
+  /* ── Body text ── */
+  p { margin-bottom: 7px; font-size: 10.5pt; }
+
+  /* ── Bullets ── */
+  ul.course-list {
+    margin: 4px 0 8px 18px;
+    padding: 0;
+  }
+  ul.course-list li {
+    margin-bottom: 3px;
+    font-size: 10.5pt;
+  }
+  ul.course-list li strong { color: var(--garnet); }
+
+  /* ── Phase boxes ── */
+  .phases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 8px 0 14px;
+  }
+  .phase-box {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  .phase-label {
+    padding: 10px 8px;
+    color: #fff;
+    font-size: 9pt;
+    font-weight: 700;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+  }
+  .phase-content {
+    background: var(--light);
+    padding: 10px 10px;
+    font-size: 9pt;
+    color: var(--navy);
+    line-height: 1.45;
+  }
+  .p1 { background: var(--garnet); }
+  .p2 { background: var(--navy); }
+  .p3 { background: var(--green); }
+  .p4 { background: var(--purple); }
+
+  /* ── Weeks table ── */
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 9.5pt; }
+  th {
+    background: var(--garnet);
+    color: #fff;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 9pt;
+  }
+  th:first-child, td:first-child { text-align: center; width: 48px; }
+  tr:nth-child(even) td { background: #f9f9f9; }
+  td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  .phase-tag {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 700;
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: #fff;
+  }
+  .tag-p1 { background: var(--garnet); }
+  .tag-p2 { background: var(--navy); }
+  .tag-p3 { background: var(--green); }
+  .tag-p4 { background: var(--purple); }
+
+  /* ── Assignment blocks ── */
+  .assign-block { margin: 10px 0; border-radius: 5px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  .assign-header {
+    padding: 8px 12px;
+    color: #fff;
+    font-size: 10.5pt;
+    font-weight: 700;
+  }
+  .assign-body {
+    padding: 10px 14px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+  }
+  .assign-body p { margin-bottom: 5px; font-size: 10pt; }
+  .rubric-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .rubric-chip {
+    background: var(--light);
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 8.5pt;
+    color: var(--navy);
+  }
+  .rubric-label {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--garnet);
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+
+  /* ── Grade table ── */
+  .grade-table th { text-align: center; }
+  .grade-table td:last-child { text-align: center; font-weight: 600; color: var(--garnet); }
+  .grade-total td { background: var(--navy) !important; color: #fff; font-weight: 700; }
+  .grade-total td:last-child { color: var(--gold); }
+
+  /* ── Reading groups ── */
+  .reading-group h4 {
+    font-size: 10.5pt;
+    color: var(--garnet);
+    font-weight: 700;
+    margin: 12px 0 4px;
+  }
+
+  /* ── Footer banner ── */
+  .footer-banner {
+    background: var(--garnet);
+    color: var(--gold);
+    text-align: center;
+    font-size: 8.5pt;
+    padding: 7px;
+    border-radius: 4px;
+    margin-top: 22px;
+    letter-spacing: 0.4px;
+  }
+
+  .note-box {
+    background: #fff8e1;
+    border-left: 4px solid var(--gold);
+    padding: 8px 12px;
+    font-size: 10pt;
+    color: var(--navy);
+    margin: 8px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  @media print {
+    body { padding: 12px 16px; font-size: 9.5pt; }
+    .title-banner { box-shadow: none; }
+    .phases-grid { page-break-inside: avoid; }
+    .assign-block { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TITLE BANNER ═══════════════ -->
+<div class="title-banner">
+  <div class="title-left">
+    <div class="tag">ISCI XXX &nbsp;·&nbsp; 3 Credits</div>
+    <h1>Games, AI, and Information Integrity:</h1>
+    <div class="subtitle">Designing Playable Solutions</div>
+  </div>
+  <div class="title-right">
+    <div class="inst">University of South Carolina</div>
+    <p>School of Information Science</p>
+    <p>College of Information and Communications</p>
+    <p style="margin-top:8px"><strong style="color:#fff">Instructor:</strong> Yeonhee Cho (Johnny)</p>
+    <p><strong style="color:#fff">Email:</strong> [USC email]</p>
+    <p><strong style="color:#fff">Office Hours:</strong> TBD</p>
+    <p><strong style="color:#fff">Format:</strong> In-Person / Hybrid &nbsp;|&nbsp; Semester: TBD</p>
+  </div>
+</div>
+
+<!-- ═══════════════ COURSE DESCRIPTION ═══════════════ -->
+<div class="section-label">Course Description</div>
+<p>This course explores how games can be designed to address information integrity challenges, particularly misinformation and AI-generated content such as deepfakes and synthetic media. Students critically evaluate existing misinformation games and develop original, evidence-informed game prototypes that promote information integrity.</p>
+<p><em>This is not a traditional game design course.</em> It is an applied information science course focused on AI ethics, intervention design, and social impact. Students move from understanding AI-driven information risks → evaluating current interventions → designing and testing their own playable solutions.</p>
+
+<!-- ═══════════════ RATIONALE ═══════════════ -->
+<div class="section-label">Course Rationale</div>
+<p>AI technologies have transformed the information ecosystem. Deepfakes, AI-generated text, synthetic audio, and automated content systems present new challenges to information integrity. Traditional media literacy emphasizes access, evaluation, and critical thinking — yet a gap persists between knowledge and behavioral resistance to misinformation. This course bridges that gap by:</p>
+<ul class="course-list">
+  <li>Using games as <strong>experiential learning tools</strong></li>
+  <li>Engaging students in <strong>intervention design</strong></li>
+  <li>Integrating <strong>ethics, research, and systems thinking</strong></li>
+</ul>
+<p>Students become <strong>intervention-minded information professionals</strong> capable of designing tools that promote integrity in the AI era.</p>
+
+<!-- ═══════════════ LEARNING OUTCOMES ═══════════════ -->
+<div class="section-label">Learning Outcomes</div>
+<p>By the end of this course, students will be able to:</p>
+<ul class="course-list">
+  <li><strong>1.</strong> Analyze AI-driven information risks and misinformation systems.</li>
+  <li><strong>2.</strong> Critically evaluate misinformation games using theoretical frameworks.</li>
+  <li><strong>3.</strong> Identify gaps in current AI misinformation interventions.</li>
+  <li><strong>4.</strong> Design and prototype an evidence-informed playable intervention.</li>
+  <li><strong>5.</strong> Assess ethical implications and societal impact of their designs.</li>
+  <li><strong>6.</strong> Reflect on design decisions using structured documentation and research evidence.</li>
+</ul>
+
+<!-- ═══════════════ COURSE STRUCTURE ═══════════════ -->
+<div class="section-label">Course Structure (15 Weeks)</div>
+<div class="phases-grid">
+  <div class="phase-box">
+    <div class="phase-label p1">Phase 1<br>Understanding<br>(Wks 1–4)</div>
+    <div class="phase-content">What is information integrity in the AI era? • AI & transformation of information risk • Misinformation systems and social consequences • Personal and professional responsibility</div>
+  </div>
+  <div class="phase-box">
+    <div class="phase-label p2">Phase 2<br>Evaluating<br>(Wks 5–7)</div>
+    <div class="phase-content">Misinformation games in research • Play & critique sessions • Comparative evaluation of interventions • Identifying AI-era gaps</div>
+  </div>
+  <div class="phase-box">
+    <div class="phase-label p3">Phase 3<br>Designing<br>(Wks 8–12)</div>
+    <div class="phase-content">Researching AI-driven misinformation problems • Framing interventions • Low-fidelity prototyping • Iteration and revision • High-fidelity prototype development</div>
+  </div>
+  <div class="phase-box">
+    <div class="phase-label p4">Phase 4<br>Reflecting<br>(Wks 13–15)</div>
+    <div class="phase-content">User testing • Evidence collection • Ethical red-teaming • Final public showcase and reflection</div>
+  </div>
+</div>
+
+<!-- ═══════════════ WEEK-BY-WEEK ═══════════════ -->
+<div class="section-label">Week-by-Week Overview</div>
+<table>
+  <thead>
+    <tr><th>Wk</th><th>Phase</th><th>Topic</th><th>Small Assignment</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td><span class="phase-tag tag-p1">P1</span></td><td>What is Information Integrity in the AI Era?</td><td>Concept Mapping Exercise</td></tr>
+    <tr><td>2</td><td><span class="phase-tag tag-p1">P1</span></td><td>Why Does Misinformation Matter?</td><td>Real-World Impact Snapshot</td></tr>
+    <tr><td>3</td><td><span class="phase-tag tag-p1">P1</span></td><td>AI & the Transformation of Information Risk</td><td>Risk Amplification Analysis</td></tr>
+    <tr><td>4</td><td><span class="phase-tag tag-p1">P1</span></td><td>Reflection & Personal Responsibility in AI-Era Information Integrity</td><td>Responsibility Position Statement</td></tr>
+    <tr><td>5</td><td><span class="phase-tag tag-p2">P2</span></td><td>Misinformation Games in Research</td><td>Research-to-Mechanics Analysis</td></tr>
+    <tr><td>6</td><td><span class="phase-tag tag-p2">P2</span></td><td>Play & Evaluate Misinformation Games</td><td>Structured Evaluation Worksheet</td></tr>
+    <tr><td>7</td><td><span class="phase-tag tag-p2">P2</span></td><td>Game Evaluation Reflection</td><td>AI-Era Gap Identification</td></tr>
+    <tr><td>8</td><td><span class="phase-tag tag-p3">P3</span></td><td>Researching AI-Driven Misinformation Problems</td><td>AI Risk Brief</td></tr>
+    <tr><td>9</td><td><span class="phase-tag tag-p3">P3</span></td><td>Narrowing Problems & Framing Intervention</td><td>Design Rationale Document</td></tr>
+    <tr><td>10</td><td><span class="phase-tag tag-p3">P3</span></td><td>Designing Low-Fidelity Prototype</td><td>Low-Fidelity Prototype Submission</td></tr>
+    <tr><td>11</td><td><span class="phase-tag tag-p3">P3</span></td><td>Prototype Revision & Iteration (Office Hours)</td><td>Iteration Memo</td></tr>
+    <tr><td>12</td><td><span class="phase-tag tag-p3">P3</span></td><td>High-Fidelity Prototype Development</td><td>High-Fidelity Prototype Submission</td></tr>
+    <tr><td>13</td><td><span class="phase-tag tag-p4">P4</span></td><td>User Testing & Evidence Collection</td><td>User Testing Plan & Data Log</td></tr>
+    <tr><td>14</td><td><span class="phase-tag tag-p4">P4</span></td><td>Design Reflection & Integrity Analysis</td><td>Integrity Impact Reflection</td></tr>
+    <tr><td>15</td><td><span class="phase-tag tag-p4">P4</span></td><td>Final Presentation & Showcase</td><td>Presentation Slide Deck Submission</td></tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════ MAJOR ASSIGNMENTS ═══════════════ -->
+<div class="section-label">Major Assignments</div>
+<div class="note-box">📌 <strong>Key principle:</strong> The game prototype is 20% of the grade. Process documentation and critical reflection carry 80%.</div>
+
+<div class="assign-block">
+  <div class="assign-header" style="background:#1a1a2e">1. Weekly Assignments (Individual) — 30%</div>
+  <div class="assign-body">
+    <p>Short structured submissions (concept maps, risk analyses, evaluation worksheets, research briefs, reflection memos) submitted each week. Each assignment is worth 2% of the final grade.</p>
+  </div>
+</div>
+
+<div class="assign-block">
+  <div class="assign-header" style="background:var(--garnet)">2. AI Integrity Briefing (Individual) — 15%</div>
+  <div class="assign-body">
+    <p>Students create a recorded mini-presentation synthesizing key concepts from Weeks 1–4. Focuses on conceptual clarity, systems thinking, and AI risk analysis.</p>
+    <div class="rubric-label">Rubric</div>
+    <div class="rubric-row">
+      <span class="rubric-chip">Conceptual Understanding 30%</span>
+      <span class="rubric-chip">Systems & AI Risk Analysis 30%</span>
+      <span class="rubric-chip">Use of Course Material 20%</span>
+      <span class="rubric-chip">Reflection & Clarity 20%</span>
+    </div>
+  </div>
+</div>
+
+<div class="assign-block">
+  <div class="assign-header" style="background:var(--green)">3. Misinformation Game Evaluation Report (Team) — 15%</div>
+  <div class="assign-body">
+    <p>Teams prepare a collaborative analytical report evaluating existing misinformation games using theoretical frameworks and empirical research covered in Weeks 5–7.</p>
+    <div class="rubric-label">Rubric</div>
+    <div class="rubric-row">
+      <span class="rubric-chip">Theoretical Integration 25%</span>
+      <span class="rubric-chip">Analytical Depth 30%</span>
+      <span class="rubric-chip">Evidence Use 20%</span>
+      <span class="rubric-chip">AI-Era Gap Identification 15%</span>
+      <span class="rubric-chip">Organization & Clarity 10%</span>
+    </div>
+  </div>
+</div>
+
+<div class="assign-block">
+  <div class="assign-header" style="background:var(--purple)">4. AI-Misinformation Game Prototype (Team) — 20%</div>
+  <div class="assign-body">
+    <p>Teams design and develop a playable game-based intervention addressing a specific AI-driven misinformation challenge. Deliverables include a problem framing document, low-fidelity prototype, iteration memo, and high-fidelity prototype.</p>
+    <div class="rubric-label">Rubric</div>
+    <div class="rubric-row">
+      <span class="rubric-chip">Problem & Integrity Alignment 25%</span>
+      <span class="rubric-chip">System Design & Mechanics 25%</span>
+      <span class="rubric-chip">Evidence-Informed Iteration 20%</span>
+      <span class="rubric-chip">Theoretical Integration 15%</span>
+      <span class="rubric-chip">Ethical & Societal Awareness 15%</span>
+    </div>
+  </div>
+</div>
+
+<div class="assign-block">
+  <div class="assign-header" style="background:var(--rust)">5. Public Presentation + Reflection (Individual) — 15%</div>
+  <div class="assign-body">
+    <p>Students present their team's intervention publicly and submit an individual analytical reflection evaluating effectiveness, limitations, and ethical implications of the game prototype.</p>
+    <div class="rubric-label">Rubric</div>
+    <div class="rubric-row">
+      <span class="rubric-chip">Evidence-Based Evaluation 30%</span>
+      <span class="rubric-chip">Conceptual Integration 25%</span>
+      <span class="rubric-chip">Ethical & Systems Awareness 25%</span>
+      <span class="rubric-chip">Analytical Clarity 20%</span>
+    </div>
+  </div>
+</div>
+
+<div class="assign-block">
+  <div class="assign-header" style="background:#424242">6. Participation & Engagement (Individual) — 5%</div>
+  <div class="assign-body">
+    <p>Active engagement in discussions, peer feedback sessions, and in-class workshops throughout the semester.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ GRADING TABLE ═══════════════ -->
+<div class="section-label">Grading Summary</div>
+<table class="grade-table">
+  <thead>
+    <tr><th>Component</th><th>Type</th><th>Weight</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Weekly Assignments</td><td style="text-align:center">Individual</td><td>30%</td></tr>
+    <tr><td>AI Integrity Briefing</td><td style="text-align:center">Individual</td><td>15%</td></tr>
+    <tr><td>Misinformation Game Evaluation Report</td><td style="text-align:center">Team</td><td>15%</td></tr>
+    <tr><td>AI-Misinformation Game Prototype</td><td style="text-align:center">Team</td><td>20%</td></tr>
+    <tr><td>Public Presentation + Reflection</td><td style="text-align:center">Individual</td><td>15%</td></tr>
+    <tr><td>Participation & Engagement</td><td style="text-align:center">Individual</td><td>5%</td></tr>
+    <tr class="grade-total"><td><strong>TOTAL</strong></td><td></td><td>100%</td></tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════ READINGS ═══════════════ -->
+<div class="section-label">Required Readings & Resources</div>
+
+<div class="reading-group">
+  <h4>📘 Game Studies & Design</h4>
+  <ul class="course-list">
+    <li>Bogost, I. (2007). <em>Persuasive Games: The Expressive Power of Videogames.</em> MIT Press.</li>
+    <li>Salen, K. & Zimmerman, E. (2004). <em>Rules of Play</em> (Selected chapters). MIT Press.</li>
+    <li>Flanagan, M. (2009). <em>Critical Play.</em> MIT Press.</li>
+    <li>Costanza-Chock, S. (2020). <em>Design Justice,</em> Chapter 1. MIT Press.</li>
+    <li>Schön, D. (1983). <em>The Reflective Practitioner,</em> Chapter 2.</li>
+    <li>Dewey, J. (1938). <em>Experience and Education.</em></li>
+  </ul>
+
+  <h4>📄 Misinformation & AI</h4>
+  <ul class="course-list">
+    <li>Wardle, C. & Derakhshan, H. (2017). Information Disorder. <em>Council of Europe.</em></li>
+    <li>Roozenbeek, J. & van der Linden, S. (2019). The Fake News Game. <em>Journal of Risk Research.</em></li>
+    <li>Chesney, R. & Citron, D. (2019). Deep Fakes: A Looming Challenge. <em>California Law Review.</em></li>
+    <li>Floridi, L. et al. (2018). AI4People—An Ethical Framework for a Good AI Society. <em>Minds & Machines.</em></li>
+    <li>Farid, H. (2022). Creating, Using, Misusing, and Detecting Deep Fakes. <em>Journal of Online Trust & Safety.</em></li>
+    <li>Wineburg, S. & McGrew, S. (2019). Lateral Reading. <em>Stanford History Education Group.</em></li>
+    <li>★ Cho, Y. et al. (2023). Misinformation Escape Room Study. <em>(Instructor's own research)</em></li>
+  </ul>
+
+  <h4>🎮 Games Students Will Play</h4>
+  <ul class="course-list">
+    <li><strong>Bad News</strong> (2018) — DROG & Cambridge: Spread misinformation as the player.</li>
+    <li><strong>Harmony Square</strong> (2020) — Cambridge / Dept. of Homeland Security: Political polarization inoculation.</li>
+    <li><strong>Troll Factory</strong> (2019) — Yle Finland: Social media manipulation mechanics.</li>
+    <li><strong>Go Viral!</strong> (2020) — Cambridge / WHO: Health misinformation; COVID-19 context.</li>
+    <li><strong>Cranky Uncle</strong> (2021) — John Cook: AI-generated misinformation — closest to course focus.</li>
+  </ul>
+
+  <h4>🛠 Tools & Resources</h4>
+  <ul class="course-list">
+    <li><strong>Miro</strong> — Collaborative whiteboard for game analysis, design briefs, and critiques.</li>
+    <li><strong>Figma / InVision</strong> — Lo-fi and hi-fi prototyping of card/board game mockups.</li>
+    <li><strong>Misinformation Game Portal</strong> — bit.ly/misinformation_games</li>
+    <li><strong>Stanford Internet Observatory</strong> — fsi.stanford.edu/io</li>
+    <li><strong>NewsGuard</strong> — Real case database for research (Weeks 8–9).</li>
+    <li><strong>MIT Media Lab Moral Machine</strong> — moral-machine.net</li>
+  </ul>
+</div>
+
+<!-- ═══════════════ TEACHING APPROACH ═══════════════ -->
+<div class="section-label">Teaching Approach</div>
+<p>This course is workshop-based and discussion-driven, structured around Kolb's experiential learning cycle: <em>Abstract Conceptualization → Active Experimentation → Concrete Experience → Reflective Observation.</em> A typical class session includes:</p>
+<ul class="course-list">
+  <li><strong>Short lecture (15–20 min)</strong> — concept grounding and framing</li>
+  <li><strong>Gameplay or case exploration</strong> — hands-on experience with misinformation interventions</li>
+  <li><strong>Small-group analysis</strong> — structured critique using theoretical frameworks</li>
+  <li><strong>Design workshop</strong> — iterative prototyping and peer review</li>
+  <li><strong>Structured reflection</strong> — individual or paired exit memos</li>
+</ul>
+
+<!-- ═══════════════ INTEGRITY ═══════════════ -->
+<div class="section-label">Academic Integrity & Ethical Design</div>
+<p>Because this course directly engages with misinformation and AI systems, ethical design is a course-wide commitment. Students must approach all design work ethically. <strong>Week 10</strong> includes a mandatory ethical "red-team" exercise in which teams test whether their game could function as a manipulation tutorial. Designs must not facilitate harm. Proper citation of all sources is required.</p>
+
+<!-- ═══════════════ FLEXIBILITY ═══════════════ -->
+<div class="section-label">Flexibility & Accessibility</div>
+<p>If a team struggles to build a fully playable game, alternative interactive media formats may be approved (e.g., interactive comic, infographic-based system, narrative simulation, short video). The core objective is thoughtful, research-informed intervention design — not technical polish. Students are encouraged to continue developing prototypes beyond the course for civic, research, or portfolio purposes.</p>
+
+<!-- ═══════════════ CAREER RELEVANCE ═══════════════ -->
+<div class="section-label">Career Relevance</div>
+<p>Students leave with a portfolio-ready prototype, structured design documentation, and applied intervention experience. This course prepares students for roles in:</p>
+<ul class="course-list">
+  <li>Civic technology and misinformation response</li>
+  <li>Journalism and media organizations</li>
+  <li>Library programming and information services</li>
+  <li>Public health communication</li>
+  <li>AI ethics consulting</li>
+  <li>Education technology</li>
+  <li>Information policy and government</li>
+</ul>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<div class="footer-banner">
+  University of South Carolina &nbsp;·&nbsp; School of Information Science &nbsp;·&nbsp; College of Information and Communications
+</div>
+
+</body>
+</html>
