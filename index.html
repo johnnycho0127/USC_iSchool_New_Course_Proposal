@@ -9,234 +9,297 @@
     --garnet: #73000C;
     --gold: #FFCC00;
     --navy: #1a1a2e;
-    --light-gray: #f8f9fa;
-    --p1: #73000C; /* Foundations */
-    --p2: #1a1a2e; /* Critique */
-    --p3: #2E7D32; /* Build */
-    --p4: #4A148C; /* Reflect */
+    --light: #f4f4f9;
+    --p1: #73000C; --p2: #1a1a2e; --p3: #2E7D32; --p4: #4A148C;
   }
 
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--navy);
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 2rem;
-    background-color: #f0f2f5;
+    padding: 20px;
+    background: #eef0f3;
   }
 
-  /* --- Interactive Header --- */
-  .hero {
-    background: linear-gradient(135deg, var(--garnet) 60%, var(--navy));
+  /* --- HEADER --- */
+  header {
+    background: linear-gradient(135deg, var(--garnet), var(--navy));
     color: white;
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    margin-bottom: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero h1 { font-size: 2.5rem; margin: 0; line-height: 1.1; }
-  .hero p { color: var(--gold); font-weight: 600; font-size: 1.2rem; margin-top: 10px; }
-  
-  .badge-container { display: flex; gap: 10px; margin-top: 20px; }
-  .badge { background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-
-  /* --- Course Arc Navigation --- */
-  .arc-nav {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 2rem;
-  }
-
-  .arc-step {
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
     text-align: center;
-    border-bottom: 4px solid #ccc;
-    cursor: pointer;
-    transition: 0.3s;
   }
 
-  .arc-step:hover { transform: translateY(-5px); }
-  .step-1 { border-color: var(--p1); }
-  .step-2 { border-color: var(--p2); }
-  .step-3 { border-color: var(--p3); }
-  .step-4 { border-color: var(--p4); }
+  header h1 { font-size: 2.2rem; margin: 0; }
+  .subtitle { color: var(--gold); font-size: 1.3rem; font-weight: bold; margin-top: 10px; }
+  .meta { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.9rem; flex-wrap: wrap; }
+  .meta span { background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--gold); }
 
-  /* --- Accordion Styles --- */
-  .accordion {
+  /* --- SECTION TITLES --- */
+  h2 { border-left: 5px solid var(--garnet); padding-left: 15px; margin-top: 40px; color: var(--garnet); }
+
+  /* --- GRADING & PHASE GRID --- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
+  .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
+  .card h3 { margin-top: 0; font-size: 1.1rem; }
+  .card .percent { font-size: 1.5rem; font-weight: 800; color: var(--garnet); }
+
+  /* --- WEEKLY ACCORDIONS (FOLDING FEATURES) --- */
+  .week-module {
     background: white;
+    margin-bottom: 10px;
     border-radius: 8px;
-    margin-bottom: 1rem;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-left: 6px solid #ccc;
   }
 
-  .acc-header {
-    padding: 1.2rem;
-    font-weight: 700;
+  .week-header {
+    padding: 15px 20px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
-    transition: background 0.2s;
+    font-weight: bold;
+    transition: background 0.3s;
   }
 
-  .acc-header:hover { background: var(--light-gray); }
+  .week-header:hover { background: #f9f9f9; }
+  .week-content { display: none; padding: 20px; border-top: 1px solid #eee; background: #fff; }
+  
+  .phase-1 { border-color: var(--p1); } .phase-2 { border-color: var(--p2); }
+  .phase-3 { border-color: var(--p3); } .phase-4 { border-color: var(--p4); }
 
-  .acc-content {
-    display: none;
-    padding: 0 1.2rem 1.2rem;
-    border-top: 1px solid #eee;
-  }
+  .objective-list, .reading-list { font-size: 0.95rem; margin-bottom: 15px; }
+  .assignment-box { background: #fff8e1; border: 1px solid var(--gold); padding: 15px; border-radius: 5px; }
+  .instructor-note { font-style: italic; color: #555; font-size: 0.9rem; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 10px; }
 
-  /* --- Assignment Cards --- */
-  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
-  .assign-card {
-    background: #fff;
-    border-left: 5px solid var(--garnet);
-    padding: 1.5rem;
-    border-radius: 0 8px 8px 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-  .weight { float: right; color: var(--garnet); font-weight: 800; font-size: 1.2rem; }
+  /* --- POLICIES --- */
+  .policy-box { background: white; padding: 25px; border-radius: 10px; margin-bottom: 20px; }
 
-  /* --- Tooltip/Rubric Hover --- */
-  .rubric-pill {
-    display: inline-block;
-    background: #e9ecef;
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin: 2px;
-    cursor: help;
-    position: relative;
-  }
+  footer { text-align: center; padding: 40px; font-size: 0.8rem; color: #666; }
 
-  .rubric-pill:hover::after {
-    content: "Evidence-based evaluation & integrity alignment";
-    position: absolute;
-    bottom: 120%;
-    left: 0;
-    background: var(--navy);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    width: 200px;
-    z-index: 10;
-  }
-
-  @media (max-width: 768px) {
-    .card-grid, .arc-nav { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-  <header class="hero">
-    <div class="badge-container">
-      <span class="badge">ISCI XXX</span>
-      <span class="badge">Spring 2026</span>
-    </div>
-    <h1>Games, AI, and Information Integrity</h1>
-    <p>Designing Playable Solutions to Digital Deception</p>
-    <div style="margin-top: 20px; font-size: 0.9rem;">
-      <strong>Instructor:</strong> Yeonhee Cho (Johnny), PhD Candidate <br>
-      <strong>Focus:</strong> Applied Info Science & Intervention Design [cite: 8, 9]
-    </div>
-  </header>
-
-  <section class="arc-nav">
-    <div class="arc-step step-1"><strong>Phase 1</strong><br><small>Foundations</small></div>
-    <div class="arc-step step-2"><strong>Phase 2</strong><br><small>Critique</small></div>
-    <div class="arc-step step-3"><strong>Phase 3</strong><br><small>Build</small></div>
-    <div class="arc-step step-4"><strong>Phase 4</strong><br><small>Reflect</small></div>
-  </section>
-
-  <div class="accordion">
-    <div class="acc-header" onclick="toggleAcc(this)">
-      <span>🚀 THE MISSION: From Analysis to Intervention</span>
-      <span>+</span>
-    </div>
-    <div class="acc-content" style="display: block;">
-      <p>This is not just a game design class. We move from <strong>understanding</strong> AI-driven risks to <strong>evaluating</strong> existing games, and finally <strong>building</strong> evidence-based solutions[cite: 6, 11]. You will leave as an intervention-minded professional[cite: 9].</p>
-      <ul>
-        <li><strong>Analyze:</strong> Deepfakes, LLM hallucination, and synthetic media[cite: 22].</li>
-        <li><strong>Play:</strong> Critically evaluate "Bad News," "Cranky Uncle," and more[cite: 26].</li>
-        <li><strong>Create:</strong> Prototype a high-fidelity game intervention[cite: 33].</li>
-      </ul>
-    </div>
+<header>
+  <h1>Games, AI, and Information Integrity</h1>
+  <div class="subtitle">Designing Playable Solutions</div>
+  <div class="meta">
+    <span><strong>Instructor:</strong> Yeonhee Cho (Johnny)</span>
+    <span><strong>Institution:</strong> USC School of Information Science</span>
+    <span><strong>Platforms:</strong> Miro, Figma, InVision</span>
   </div>
+</header>
 
-  <div class="section-label" style="font-weight: bold; margin: 2rem 0 1rem; font-size: 1.5rem; border-bottom: 3px solid var(--garnet);">Major Milestones</div>
+<section>
+  <h2>Course Overview</h2>
+  <p>This is not simply a game design class. It is an applied information science course focused on integrity, AI, and social impact[cite: 102]. Students leave as intervention-minded information professionals capable of designing evidence-based solutions to AI-driven information threats.</p>
   
-  <div class="card-grid">
-    <div class="assign-card" style="border-color: var(--p1);">
-      <span class="weight">15%</span>
-      <h3>AI Integrity Briefing</h3>
-      <p>Individual 5-min recorded briefing for a non-specialist audience explaining AI risks[cite: 12, 23].</p>
-      <div class="rubric-pill">Conceptual Clarity</div> <div class="rubric-pill">AI Risk Analysis</div>
-    </div>
+  <div class="grid">
+    <div class="card"><h3>Weekly Assignments</h3><div class="percent">35%</div><small>Individual (x15)</small></div>
+    <div class="card"><h3>AI Integrity Briefing</h3><div class="percent">15%</div><small>Individual (Week 4)</small></div>
+    <div class="card"><h3>Evaluation Report</h3><div class="percent">15%</div><small>Team (Week 7)</small></div>
+    <div class="card"><h3>Hi-Fi Prototype</h3><div class="percent">20%</div><small>Team (Week 12)</small></div>
+    <div class="card"><h3>Final Showcase</h3><div class="percent">15%</div><small>Team (Week 15)</small></div>
+  </div>
+</section>
 
-    <div class="assign-card" style="border-color: var(--p2);">
-      <span class="weight">15%</span>
-      <h3>Game Evaluation Report</h3>
-      <p>Team analysis of existing misinformation games using <em>Procedural Rhetoric</em>[cite: 12, 27].</p>
-      <div class="rubric-pill">Theoretical Depth</div> <div class="rubric-pill">Gap Identification</div>
-    </div>
+<h2>Weekly Schedule & Modules</h2>
+<p><small>Click a week to unfold the Learning Objectives, Required Readings, and Assignments.</small></p>
 
-    <div class="assign-card" style="border-color: var(--p3);">
-      <span class="weight">20%</span>
-      <h3>Hi-Fi Game Prototype</h3>
-      <p>A playable intervention addressing a specific AI-driven misinformation gap[cite: 15, 33].</p>
-      <div class="rubric-pill">System Design</div> <div class="rubric-pill">Integrity Alignment</div>
+<div class="week-module phase-1">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 1: What Is Information Integrity in the AI Era?</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong>
+    <ul class="objective-list">
+      <li>Define integrity (accuracy, completeness, consistency)[cite: 119].</li>
+      <li>Distinguish misinformation, disinformation, and malinformation[cite: 119].</li>
+    </ul>
+    <strong>Required Readings:</strong>
+    <p class="reading-list">Wardle & Derakhshan (2017); Floridi et al. (2018); Wineburg & McGrew (2019)[cite: 119].</p>
+    <div class="assignment-box">
+      <strong>Assignment:</strong> Concept Map (Information Integrity, Misinformation, AI, and real-world case)[cite: 119].
     </div>
+    <div class="instructor-note">Instructor Note: Spend lecture time stress-testing taxonomy with student examples[cite: 119].</div>
+  </div>
+</div>
 
-    <div class="assign-card" style="border-color: var(--p4);">
-      <span class="weight">15%</span>
-      <h3>Final Showcase</h3>
-      <p>Public 15-min presentation of your design arc and user testing evidence[cite: 15, 37].</p>
-      <div class="rubric-pill">Public Comm.</div> <div class="rubric-pill">Evidence Use</div>
+<div class="week-module phase-1">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 2: Why Does Misinformation Matter? Real-World Consequences</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong>
+    <ul class="objective-list">
+      <li>Analyze documented harms in health, politics, or finance[cite: 122].</li>
+      <li>Evaluate population vulnerability and systemic issues of equity[cite: 125].</li>
+    </ul>
+    <strong>Required Readings:</strong>
+    <p class="reading-list">Roozenbeek & van der Linden (2019); Chesney & Citron (2019); Costanza-Chock (2020)[cite: 125].</p>
+    <div class="assignment-box">
+      <strong>Assignment:</strong> Real-World Impact Snapshot (300-word analysis of a documented incident)[cite: 125].
     </div>
   </div>
+</div>
 
-  <div class="accordion" style="margin-top: 3rem;">
-    <div class="acc-header" onclick="toggleAcc(this)">
-      <span>📅 INTERACTIVE SCHEDULE (Weeks 1–15)</span>
-      <span>+</span>
-    </div>
-    <div class="acc-content">
-      <table style="width: 100%; border-collapse: collapse;">
-        <tr style="border-bottom: 2px solid #eee; text-align: left;">
-          <th style="padding: 10px;">Week</th>
-          <th style="padding: 10px;">Theme</th>
-          <th style="padding: 10px;">Lab Activity</th>
-        </tr>
-        <tr><td>1-4</td><td>Foundations</td><td>Concept mapping & AI ethics [cite: 20]</td></tr>
-        <tr><td>5-7</td><td>Play & Critique</td><td>Workshop: Game Evaluation [cite: 26]</td></tr>
-        <tr><td>8-12</td><td>Design & Build</td><td>Rapid Prototyping (Miro/Figma) [cite: 31]</td></tr>
-        <tr><td>13-15</td><td>Test & Present</td><td>User Testing & Public Showcase [cite: 35]</td></tr>
-      </table>
+<div class="week-module phase-1">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 3: AI & The Transformation of Information Risk</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong>
+    <ul class="objective-list">
+      <li>Explain how Gen-AI lowers production costs and increases scale[cite: 127].</li>
+      <li>Identify threat vectors: synthetic text, deepfakes, and algorithmic amplification[cite: 127].</li>
+    </ul>
+    <strong>Required Readings:</strong>
+    <p class="reading-list">Graphika & Stanford Internet Observatory (2022); Re-read Wardle & Derakhshan[cite: 127].</p>
+    <div class="assignment-box">
+      <strong>Assignment:</strong> AI Risk Amplification Analysis (400 words on technical risk vs mitigation)[cite: 130].
     </div>
   </div>
+</div>
 
-  <footer style="text-align: center; margin-top: 4rem; color: #777; font-size: 0.8rem;">
-    University of South Carolina · School of Information Science · Designed by Johnny Cho [cite: 4]
-  </footer>
+<div class="week-module phase-1">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 4: Reflection & Professional Responsibility</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong>
+    <ul class="objective-list">
+      <li>Synthesize personal frameworks for understanding information integrity[cite: 132].</li>
+      <li>Articulate professional responsibilities in AI-saturated environments[cite: 132].</li>
+    </ul>
+    <div class="assignment-box" style="border-color: var(--p1); background: #fee;">
+      <strong>MAJOR ASSESSMENT: AI Integrity Briefing (15%)</strong><br>
+      Record a 5-min briefing for a hypothetical employer explaining AI-era integrity[cite: 132].
+    </div>
+  </div>
+</div>
 
-  <script>
-    function toggleAcc(header) {
-      const content = header.nextElementSibling;
-      const isVisible = content.style.display === 'block';
-      content.style.display = isVisible ? 'none' : 'block';
-      header.querySelector('span:last-child').innerText = isVisible ? '+' : '-';
-    }
-  </script>
+<div class="week-module phase-2">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 5: Why Games? Inoculation & Procedural Rhetoric</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong>
+    <ul class="objective-list">
+      <li>Explain theoretical basis using inoculation theory and procedural rhetoric[cite: 141, 142].</li>
+    </ul>
+    <strong>Readings:</strong> Bogost (2007); Salen & Zimmerman (2004); Cho et al. (2023) [cite: 151, 152, 153].
+    <div class="assignment-box"><strong>Assignment:</strong> Research-to-Mechanics Analysis[cite: 157].</div>
+  </div>
+</div>
+
+<div class="week-module phase-2">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 6: Play & Evaluate Workshop</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Activity:</strong> Play <em>Bad News, Harmony Square, Go Viral, Cranky Uncle,</em> or <em>Troll Factory</em>[cite: 167].
+    <div class="assignment-box"><strong>Assignment:</strong> Structured Evaluation Worksheet[cite: 167].</div>
+  </div>
+</div>
+
+<div class="week-module phase-2">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 7: Identifying AI-Era Gaps</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong> Identify threats NOT addressed by current games[cite: 174, 175].
+    <div class="assignment-box" style="border-color: var(--p2); background: #eef;">
+      <strong>MAJOR ASSESSMENT: Game Evaluation Report (15%)</strong><br>
+      Team-based 1,500-word comparative analysis[cite: 184, 185].
+    </div>
+  </div>
+</div>
+
+<div class="week-module phase-3">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 8-10: Research & Low-Fi Prototyping</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Module:</strong> Researching AI problems, narrowing focus, and translating into a paper/card prototype[cite: 193, 195, 201].
+    <div class="assignment-box"><strong>Assignments:</strong> AI Risk Brief (W8); Design Rationale (W9); Low-Fi Submission (W10)[cite: 194, 199, 201].</div>
+  </div>
+</div>
+
+<div class="week-module phase-3">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 11-12: Iteration & Hi-Fi Development</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Module:</strong> Revising based on instructor feedback and preparing the polished digital prototype[cite: 207, 209].
+    <div class="assignment-box" style="border-color: var(--p3); background: #efe;">
+      <strong>MAJOR ASSESSMENT: Hi-Fi Prototype (20%)</strong><br>
+      Playable components + design narrative tracing mechanics to theory[cite: 212].
+    </div>
+  </div>
+</div>
+
+<div class="week-module phase-4">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 13-14: User Testing & Integrity Reflection</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Module:</strong> External testing (think-aloud technique) and ethical impact analysis[cite: 215, 221].
+    <div class="assignment-box"><strong>Assignments:</strong> Data Log (W13); Integrity Impact Reflection (W14)[cite: 218, 221].</div>
+  </div>
+</div>
+
+<div class="week-module phase-4">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <span>WEEK 15: Public Showcase</span>
+    <span>+</span>
+  </div>
+  <div class="week-content">
+    <strong>Learning Objectives:</strong> Communicate the full design arc to a public audience[cite: 224].
+    <div class="assignment-box" style="border-color: var(--p4); background: #fef;">
+      <strong>MAJOR ASSESSMENT: Final Presentation (15%)</strong><br>
+      15-min presentation (including demo and Q&A)[cite: 224].
+    </div>
+  </div>
+</div>
+
+<section class="policy-box">
+  <h2>Academic Policies</h2>
+  <p><strong>Late Work:</strong> Weekly assignments accepted up to 48 hours late (50% credit). Major assessments require prior written approval[cite: 229, 230].</p>
+  <p><strong>Generative AI:</strong> Tools may be used for research/brainstorming, but all final writing must be student-authored[cite: 232]. Disclosure is mandatory[cite: 233].</p>
+  <p><strong>Accessibility:</strong> Materials available in accessible formats upon request via OSAS[cite: 235].</p>
+  <p><strong>Alternatives:</strong> Students facing barriers to game production may substitute alternative interactive media (e.g., interactive infographics) with approval[cite: 237].</p>
+</section>
+
+<footer>
+  University of South Carolina · School of Information Science · Yeonhee Cho (Johnny) · 15-Week Semester Course
+</footer>
+
+<script>
+  function toggleWeek(header) {
+    const content = header.nextElementSibling;
+    const isVisible = content.style.display === 'block';
+    content.style.display = isVisible ? 'none' : 'block';
+    header.querySelector('span:last-child').innerText = isVisible ? '+' : '-';
+  }
+</script>
+
 </body>
 </html>
